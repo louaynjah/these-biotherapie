@@ -143,16 +143,17 @@ if st.button("🔍 Analyser mon profil", type="primary"):
             # 2. Mise en forme
             X_input = pd.DataFrame([vecteur_donnees], columns=features_requises)
             
-            # SÉCURITÉ : On force toutes les données en type "float" (nombre décimal)
-            # Cela évite les erreurs de type avec les nouvelles versions de Scikit-Learn
+            # SÉCURITÉ : Force float
             X_input = X_input.astype(float)
 
-            # 3. Imputation (l'IA gère si on a oublié une valeur)
-            data_imputed = imputer.transform(X_input)
-            X_input_imputed = pd.DataFrame(data_imputed, columns=features_requises)
+            # 3. IMPUTATION SANS ERREUR (Contournement de la version Scikit-Learn)
+            # L'imputer ancien a du mal avec la nouvelle version.
+            # On récupère juste les statistiques (les moyennes) et on remplace les NaN avec Pandas.
+            moyennes = pd.Series(imputer.statistics_, index=X_input.columns)
+            X_input_imputed = X_input.fillna(moyennes)
             
             # 4. Prédiction
-            probas = modele.predict_proba(X_input_imputed)
+            probas = modele.predict_proba(X_input_imputed.values) # .values pour passer en numpy array
             proba_succes = probas[0][1] * 100
             
             resultats.append({
@@ -187,3 +188,4 @@ if st.button("🔍 Analyser mon profil", type="primary"):
 else:
 
     st.write("Cliquez sur le bouton ci-dessus une fois les informations remplies.")
+
