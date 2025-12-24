@@ -147,13 +147,13 @@ if st.button("🔍 Analyser mon profil", type="primary"):
             X_input = X_input.astype(float)
 
             # 3. IMPUTATION SANS ERREUR (Contournement de la version Scikit-Learn)
-            # L'imputer ancien a du mal avec la nouvelle version.
-            # On récupère juste les statistiques (les moyennes) et on remplace les NaN avec Pandas.
+            # L'imputer ancien ne marche pas sur la nouvelle version.
+            # On récupère juste les moyennes calculées et on remplace les trous avec Pandas.
             moyennes = pd.Series(imputer.statistics_, index=X_input.columns)
             X_input_imputed = X_input.fillna(moyennes)
             
             # 4. Prédiction
-            probas = modele.predict_proba(X_input_imputed.values) # .values pour passer en numpy array
+            probas = modele.predict_proba(X_input_imputed.values)
             proba_succes = probas[0][1] * 100
             
             resultats.append({
@@ -188,4 +188,5 @@ if st.button("🔍 Analyser mon profil", type="primary"):
 else:
 
     st.write("Cliquez sur le bouton ci-dessus une fois les informations remplies.")
+
 
