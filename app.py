@@ -177,7 +177,7 @@ if st.button("🔍 Analyser mon profil", type="primary"):
     st.markdown(f'''
     <div style="background-color:#800020; padding:20px; border-radius:10px; text-align:center;">
         <h2>🩺 Résultat estimé</h2>
-        <p style="font-size:20px;">Le traitement le plus adapté à votre profil semble être :</p>
+        <p style="font-size:20px;">Le traitement le plus adapté à ce profil semble être :</p>
         <h1 style="color:#000000;">{meilleur["Médicament"]}</h1>
         <p>Avec une probabilité de réponse positive de <b>{meilleur["Probabilité de Succès (%)"]}%</b></p>
     </div>
@@ -192,6 +192,7 @@ if st.button("🔍 Analyser mon profil", type="primary"):
 else:
 
     st.write("Cliquez sur le bouton ci-dessus une fois les informations remplies.")
+
 
 
 
