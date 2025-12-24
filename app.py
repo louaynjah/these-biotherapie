@@ -3,6 +3,10 @@ import pandas as pd
 import joblib
 import numpy as np
 import os
+import warnings
+
+# On ignore spécifiquement le warning de version incompatible entre Sklearn
+warnings.filterwarnings("ignore", message="Trying to unpickle estimator")
 
 # --- CONFIGURATION ---
 DOSSIER_MODELES = './modeles_ia/'
@@ -174,7 +178,7 @@ if st.button("🔍 Analyser mon profil", type="primary"):
     <div style="background-color:#800020; padding:20px; border-radius:10px; text-align:center;">
         <h2>🩺 Résultat estimé</h2>
         <p style="font-size:20px;">Le traitement le plus adapté à votre profil semble être :</p>
-        <h1 style="color:#0f5132;">{meilleur["Médicament"]}</h1>
+        <h1 style="color:#000000;">{meilleur["Médicament"]}</h1>
         <p>Avec une probabilité de réponse positive de <b>{meilleur["Probabilité de Succès (%)"]}%</b></p>
     </div>
     ''', unsafe_allow_html=True)
@@ -188,6 +192,7 @@ if st.button("🔍 Analyser mon profil", type="primary"):
 else:
 
     st.write("Cliquez sur le bouton ci-dessus une fois les informations remplies.")
+
 
 
 
