@@ -12,11 +12,11 @@ MEDICAMENTS = ['Adalimumab', 'Anti-CD20', 'Anti-IL6', 'Certolizumab', 'Etanercep
 st.set_page_config(page_title="Mon Traitement Biothérapie", layout="centered")
 
 # --- TITRE ET INTRODUCTION ---
-st.title("💊 Quel traitement est fait pour moi ?")
+st.title("💊 Quel traitement est fait pour le malade ?")
 st.markdown("""
-Cette application vous aide à estimer quel médicament pourrait être le plus efficace pour vous, 
+Cette application vous aide à estimer quel médicament pourrait être le plus efficace pour le malade, 
 basé sur des données de patients similaires.
-*Remplissez les informations ci-dessous à l'aide de vos derniers résultats d'analyse.*
+*Remplissez les informations ci-dessous à l'aide des derniers résultats d'analyse.*
 """)
 
 st.info("👋 **Note :** Les données restent sur votre ordinateur. Rien n'est envoyé sur internet.")
@@ -44,22 +44,22 @@ modeles, info_features, imputers = charger_modeles()
 
 # --- FORMULAIRE SIMPLIFIÉ PATIENT ---
 
-st.subheader("1. Vos Informations Personnelles")
+st.subheader("1. Les Informations Personnelles")
 
 # On crée des colonnes pour que ce soit moins long
 col1, col2 = st.columns(2)
 
 with col1:
-    age = st.number_input("Votre âge (ans)", min_value=0, max_value=120, value=50)
-    sexe_option = st.selectbox("Vous êtes :", ["Femme", "Homme"])
+    age = st.number_input("Age (ans)", min_value=0, max_value=120, value=50)
+    sexe_option = st.selectbox("Sexe :", ["Femme", "Homme"])
     sexe_code = 2 if sexe_option == "Femme" else 1 
 
-    fumeur_option = st.selectbox("Fumez-vous ?", ["Non", "Oui"])
+    fumeur_option = st.selectbox("Le malade fume ?", ["Non", "Oui"])
     tabac_code = 1 if fumeur_option == "Non" else 2 
 
 with col2:
-    poids = st.number_input("Votre poids (kg)", min_value=30, max_value=200, value=70)
-    taille = st.number_input("Votre taille (cm)", min_value=100, max_value=220, value=170)
+    poids = st.number_input("Poids (kg)", min_value=30, max_value=200, value=70)
+    taille = st.number_input("Taille (cm)", min_value=100, max_value=220, value=170)
     
     # Calcul du BMI automatique
     if taille > 0:
@@ -67,12 +67,12 @@ with col2:
     else:
         bmi_calcule = 0
 
-    annees_maladie = st.number_input("Depuis combien d'années avez-vous la maladie ?", min_value=0, max_value=50, value=5)
+    annees_maladie = st.number_input("Depuis combien d’années a-t-il la maladie ?", min_value=0, max_value=50, value=5)
 
 st.divider()
-st.subheader("2. Vos Dernières Analyses de Sang")
+st.subheader("2. Les Dernières Analyses de Sang")
 
-st.write("*Regardez votre dernière prise de sang et entrez les valeurs (normalement en mg/L ou UI/L).*")
+st.write("*Regardez la dernière prise de sang et entrez les valeurs (normalement en mg/L ou UI/L).*")
 
 col_analyse1, col_analyse2 = st.columns(2)
 
@@ -87,16 +87,16 @@ with col_analyse2:
     lymphocytes = st.number_input("Lymphocytes (dans la NFS)", min_value=0, value=2000, help="Nombre absolu (ex: 2000)")
 
 st.divider()
-st.subheader("3. Votre Activité de la Maladie")
+st.subheader("3. Activité de la Maladie")
 
 col_maladie1, col_maladie2 = st.columns(2)
 
 with col_maladie1:
-    das28 = st.number_input("Score DAS28 (si connu)", min_value=0.0, max_value=10.0, value=4.5, help="Score donné par votre rhumatologue. Si inconnu, laissez tel quel.")
-    nad = st.number_input("Nombre d'articulations douloureuses", min_value=0, max_value=28, value=5, help="Combien d'articulations vous font mal en ce moment ?")
+    das28 = st.number_input("Score DAS28 (si connu)", min_value=0.0, max_value=10.0, value=4.5, help="Score donné par le rhumatologue. Si inconnu, laissez tel quel.")
+    nad = st.number_input("Nombre d'articulations douloureuses", min_value=0, max_value=28, value=5, help="Combien d’articulations sont douloureuses actuellement ?")
 
 with col_maladie2:
-    cortico_option = st.selectbox("Prenez-vous de la Cortisone ?", ["Non", "Oui"])
+    cortico_option = st.selectbox("Prend-il / Prend-elle de la cortisone ?", ["Non", "Oui"])
     cortico_code = 1 if cortico_option == "Non" else 2
     
     acpa_option = st.selectbox("Facteur Rhumatoïde ou ACPA positif ?", ("Je ne sais pas", "Non", "Oui"))
@@ -153,7 +153,7 @@ if st.button("🔍 Analyser mon profil", type="primary"):
             X_input_imputed = X_input.fillna(moyennes)
             
             # 4. Prédiction
-            probas = modele.predict_proba(X_input_imputed.values)
+            probas = modele.predict_proba(X_input_imputed)
             proba_succes = probas[0][1] * 100
             
             resultats.append({
@@ -171,7 +171,7 @@ if st.button("🔍 Analyser mon profil", type="primary"):
     
     # Utilisation de guillemets simples ''' ''' pour l'extérieur et doubles " " pour l'intérieur
     st.markdown(f'''
-    <div style="background-color:#d1e7dd; padding:20px; border-radius:10px; text-align:center;">
+    <div style="background-color:#800020; padding:20px; border-radius:10px; text-align:center;">
         <h2>🩺 Résultat estimé</h2>
         <p style="font-size:20px;">Le traitement le plus adapté à votre profil semble être :</p>
         <h1 style="color:#0f5132;">{meilleur["Médicament"]}</h1>
@@ -188,5 +188,6 @@ if st.button("🔍 Analyser mon profil", type="primary"):
 else:
 
     st.write("Cliquez sur le bouton ci-dessus une fois les informations remplies.")
+
 
 
