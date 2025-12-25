@@ -74,7 +74,7 @@ with col2:
     annees_maladie = st.number_input("Depuis combien d’années a-t-il la maladie ?", min_value=0, max_value=50, value=5)
 
 st.divider()
-st.subheader("2. Les Dernières Analyses de Sang")
+st.subheader("2. Les Analyses de Sang")
 
 st.write("*Regardez la dernière prise de sang et entrez les valeurs (normalement en mg/L ou UI/L).*")
 
@@ -192,6 +192,7 @@ if st.button("🔍 Analyser mon profil", type="primary"):
 else:
 
     st.write("Cliquez sur le bouton ci-dessus une fois les informations remplies.")
+
 
 
 
