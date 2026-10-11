@@ -79,11 +79,9 @@ Puis ouvrir le lien local affiché dans le terminal (souvent `http://localhost:8
 
 ## 🖼️ Visuels
 
-
-```md
 [Capture écran - formulaire](formulaire.jpg)
 [Capture écran - résultats](results.jpg)
-```
+
 
 ---
 
