@@ -82,8 +82,8 @@ Puis ouvrir le lien local affiché dans le terminal (souvent `http://localhost:8
 Tu pourras intégrer ici tes images plus tard :
 
 ```md
-![Capture écran - formulaire](docs/images/formulaire.png)
-![Capture écran - résultats](docs/images/resultats.png)
+![Capture écran - formulaire](docs/images/formulaire.jpg)
+![Capture écran - résultats](docs/images/results.jpg)
 ```
 
 ---
