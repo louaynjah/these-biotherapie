@@ -77,13 +77,12 @@ Puis ouvrir le lien local affiché dans le terminal (souvent `http://localhost:8
 
 ---
 
-## 🖼️ Visuels (à ajouter)
+## 🖼️ Visuels
 
-Tu pourras intégrer ici tes images plus tard :
 
 ```md
-![Capture écran - formulaire](docs/images/formulaire.jpg)
-![Capture écran - résultats](docs/images/results.jpg)
+[Capture écran - formulaire](formulaire.jpg)
+[Capture écran - résultats](results.jpg)
 ```
 
 ---
